@@ -9,8 +9,8 @@ scope_re = re.compile("^(\s*)def (\w*)\(")
 
 
 def get_graph_string(filelist):
-    s = "[ steps ] -> [ END ]\n"
-    
+    s = "[ summary ] -> [ END ]\n"
+
     for fn in filelist:
         if os.path.basename(fn) == 'app.py':
             src = "START"
@@ -32,15 +32,15 @@ def get_graph_string(filelist):
                     use_indent = len(use_match.group(1))
                     if use_indent <= scope_indent:
                         scopes.pop()
-                    s += "[ {} ] - {} -> [ {} ]\n".format(src,
-                                                          "{}:{}".format(scopes[0], i+1),
-                                                          use_match.group(2))
+                    s += "[ {} ] - {} -> [ {} ]\n".format(
+                        src, "{}:{}".format(scopes[0], i+1),
+                        use_match.group(2))
     return s
 
 
 def get_files(kind):
     fl = []
-    for root, dirs, files in os.walk('conjure/controllers'):
+    for root, dirs, files in os.walk('conjureup/controllers'):
         for name in files:
             if os.path.basename(name) == "{}.py".format(kind):
                 fl.append(os.path.join(root, name))
@@ -57,6 +57,6 @@ def run_graph_easy(graph_string):
 if __name__ == "__main__":
     for t in ['gui', 'tui']:
         fl = get_files(t)
-        s = get_graph_string(fl + [os.path.abspath('conjure/app.py')])
+        s = get_graph_string(fl + [os.path.abspath('conjureup/app.py')])
         print(t)
         print(run_graph_easy(s))

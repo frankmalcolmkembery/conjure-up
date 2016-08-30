@@ -1,4 +1,4 @@
-# conjure-up
+# conjure-up [![Build Status](https://travis-ci.org/conjure-up/conjure-up.svg?branch=master)](https://travis-ci.org/conjure-up/conjure-up)
 > Installing cloud packages like whoa.
 
 # what it is
@@ -11,39 +11,29 @@ Then **conjure-up** is for you!
 This is the runtime application for processing spells to get those **big software**
 solutions up and going with as little hindrance as possible.
 
+# installation
+
+> Xenial and above
+
+We use snap's for packaging and installation, as of snapd 2.11 the following
+needs to be run
+
+```
+$ sudo dpkg-reconfigure -p medium lxd
+$ lxc finger
+$ sudo snap install conjure-up --devmode
+$ sudo snap connect conjure-up:firewall-control ubuntu-core:firewall-control
+$ sudo snap connect conjure-up:network-control ubuntu-core:network-control
+$ sudo systemctl start snap.conjure-up.bridge.service
+```
+
+These steps are required primarily for the **OpenStack** on a single machine
+case where we need access to a custom bridge for our deployment to function
+correctly.
+
 # how to use
 
-## Xenial and above
-
-It is included in the archive.
-
-## Bleeding edge
-
-Brave? Try the bleeding edge version and file bugs to keep us honest.
-
-```
-$ sudo apt-add-repository ppa:conjure-up/daily-git
-```
-
-Or install our **pre-releases**
-
-```
-$ sudo apt-add-repository ppa:conjure-up/next
-```
-
-Add the latest Juju
-
-```
-$ sudo apt-add-repository ppa:juju/devel
-```
-
-### Install the packages
-```
-$ sudo apt update
-$ sudo apt install conjure-up
-```
-
-### Run the installer interactively
+## Run the installer interactively
 
 You may want to learn a little bit about what you're installing, right? This
 method provides you with a tutorial like approach without being overburdening.
@@ -53,17 +43,17 @@ few config options before deploying. Or, just hold down the enter button and
 it'll choose sensible defaults for you.
 
 ```
-$ conjure-up openstack
+$ conjure-up
 ```
 
-### Run the installer non-interactively (headless mode)
+## Run the installer non-interactively (headless mode)
 
 Already been through the guided tour? Not keen on holding down the enter button
 on your keyboard? Not a problem, easily get your **big software** up and running
 with all the sensible defaults in place.
 
 ```
-$ conjure-up ~containers/observable-kubernetes to azure
+$ conjure-up observable-kubernetes aws
 ```
 
 # authors
